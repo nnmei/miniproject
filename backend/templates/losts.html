@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title Animal Lost</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/mainstyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/substyle.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-con">
+                <div class="logo"><a href="#">Help your pet!</a></div>
+                <ul class="menu">
+                    <li><a href="/home">หน้าหลัก</a></li>
+                    <li><a href="/founds">สัตว์พบ</a></li>
+                    <li><a href="/losts">สัตว์หาย</a></li>
+                    <li><a href="/contact">ติดต่อเรา</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section class="content-lost">
+        <div class="container">
+            <div class="content-title">
+                <h3>รายการสัตว์หาย</h3>
+            </div>
+            <div class="content-con-animal">
+                {% for item in losts %}
+                <div class="content-item">
+                    <img src="{{ item.coverimage }}" alt="{{ item.name }}">
+                    <h4>{{ item.name }}</h4>
+                    <p>{{ item.detail }}</p>
+                    <a href="https://www.google.com/maps?q={{ item.latitude }},{{ item.longitude }}" target="_blank" class="content-btn">ดูแผนที่</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</body>
+</html>

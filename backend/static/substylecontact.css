@@ -1,0 +1,115 @@
+.contact-section {
+    padding: 100px 0;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    background: url('cat.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.contact-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+
+}
+
+.contact-section .container {
+    position: relative;
+    z-index: 2;
+}
+
+.contact-section .display-4 {
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: text-glow 2s infinite alternate;
+}
+
+.contact-section .lead {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.contact-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    border: 4px solid transparent;
+    border-image: linear-gradient(45deg, #f3ec78, #af4261, #4fd1c5, #a6c1ee);
+    border-image-slice: 1;
+    animation:  border-rotate 6s linear infinite;
+}
+@keyframes border-rotate {
+    0% {
+        border-image: linear-gradient(45deg, #f3ec78, #af4261, #4fd1c5, #a6c1ee);
+    }
+    25% {
+        border-image: linear-gradient(45deg, #f3ec78, #af4261, #4fd1c5, #a6c1ee);
+    }
+    50% {
+        border-image: linear-gradient(45deg, #f3ec78, #af4261, #4fd1c5, #a6c1ee);
+    }
+    75% {
+        border-image: linear-gradient(45deg, #f3ec78, #af4261, #4fd1c5, #a6c1ee);
+    }
+    100% {
+        border-image: linear-gradient(45deg, #f3ec78, #af4261, #4fd1c5, #a6c1ee);
+    }  
+}
+
+@keyframes text-glow {
+    0% {
+        transform: rotateX('0deg') rotateY('0deg');
+    }
+    25% {
+        transform: rotateX('180deg') rotateY('180deg');
+    }
+    50% {
+        transform: rotateX('360deg') rotateY('360deg');
+    }
+}
+.contact-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.contact-card label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.contact-card .form control {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.contact-card .btn {
+    font-size: 1.2em;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.contact-card .btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.contact-card .btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}

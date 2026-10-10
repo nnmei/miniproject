@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Find Animal</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/mainstyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/substyle.css') }}">
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-con">
+                <div class="logo"><a href="#">Help your pet!</a></div>
+                <ul class="menu">
+                    <li><a href="/home">หน้าหลัก</a></li>
+                    <li><a href="/founds">สัตว์พบ</a></li>
+                    <li><a href="/losts">สัตว์หาย</a></li>
+                    <li><a href="/contact">ติดต่อเรา</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="maincontent">
+        <div class="container">
+            <div class="maincontent-con">
+                <div class="maincontent-info">
+                    <h3>เราจะช่วยคุณได้อย่างไร</h3>
+                    <p>หากคุณพบสัตว์น่าสงสัย สันนิษฐานว่าเป็นสัตว์เลี้ยงมีเจ้าของ สามารถกดปุ่มแจ้งพบสัตว์ด้านล่าง</p>
+                    <p>หากสัตว์เลี้ยงของคุณหายไปจากบ้านของคุณ คุณสามารถประกาศตามหาสัตว์เลี้ยงได้ที่ปุ่มเดียวกันข้างล่าง</p>
+                    <a href="/form" class="maincontent-btn btn-find">แบบฟอร์มการแจ้ง</a>
+                </div>
+
+                <div class="maincontent-img">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp77f0yVBzCBW85nyzU7zs6_Ml3qQMLDhk0xwOlVg_Iy6dHlqg28w2SqV-&s=10" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- รายการพบสัตว์ -->
+    <section class="content-find">
+        <div class="container">
+            <div class="content-title">
+                <h3>รายการสัตว์พบ</h3>
+                <a href="/founds" class="title-btn">ดูเพิ่มเติม</a>
+            </div>
+            <div class="content-con">
+                {% for item in founds %}
+                <div class="content-item">
+                    <img src="{{ item.coverimage }}" alt="{{ item.name }}">
+                    <h4>{{ item.name }}</h4>
+                    <p>{{ item.detail }}</p>
+                    <a href="https://www.google.com/maps?q={{ item.latitude }},{{ item.longitude }}" target="_blank" class="content-btn">เปิดแผนที่ (Google Maps)</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- รายการสัตว์หาย -->
+    <section class="content-lost">
+        <div class="container">
+            <div class="content-title">
+                <h3>รายการสัตว์หาย</h3>
+                <a href="/losts" class="title-btn">ดูเพิ่มเติม</a>
+            </div>
+            <div class="content-con">
+                {% for item in losts %}
+                <div class="content-item">
+                    <img src="{{ item.coverimage }}" alt="{{ item.name }}">
+                    <h4>{{ item.name }}</h4>
+                    <p>{{ item.detail }}</p>
+                    <a href="https://www.google.com/maps?q={{ item.latitude }},{{ item.longitude }}" target="_blank" class="content-btn">เปิดแผนที่ (Google Maps)</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>

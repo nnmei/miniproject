@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title Animal Lost</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/mainstyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/substyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <style>
+        .form-split-wrapper {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin: 30px auto;
+            max-width: 1200px;
+            padding: 0 15px;
+        }
+        .con-container {
+            flex: 1;
+            min-width: 320px;
+        }
+        .map-box {
+            width: 100%;
+            height: 250px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-con">
+                <div class="logo"><a href="#">Help your pet!</a></div>
+                <ul class="menu">
+                    <li><a href="/home">หน้าหลัก</a></li>
+                    <li><a href="/founds">สัตว์พบ</a></li>
+                    <li><a href="/losts">สัตว์หาย</a></li>
+                    <li><a href="/contact">ติดต่อเรา</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="content-form">
+        <div class="form-split-wrapper">
+            <!-- ฝั่งซ้าย: แจ้งสัตว์หาย -->
+            <div class="con-container">
+                <form id="lostPetForm">
+                    <div class="form first">
+                        <header>แบบฟอร์มสัตว์หายออกจากบ้าน</header>
+                        <div class="detail personal">
+                            <span class="title">ข้อมูล</span>
+                            <div class="fields">
+                                <div class="input-field">
+                                    <label>Username</label>
+                                    <input type="text" id="username" placeholder="ขื่อเล่น" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>วันที่หาย</label>
+                                    <input type="date" id="date" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>ช่องทางติดต่อ</label>
+                                    <input type="text" id="contact" placeholder="ช่องทางติดต่อ" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail Animal">
+                            <span class="title">ข้อมูลสัตว์</span>
+                            <div class="fields">
+                                <div class="input-field">
+                                    <label>ประเภทสัตว์</label>
+                                    <input type="text" id="pet_type" placeholder="ex. หมา แมว" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>สี</label>
+                                    <input type="text" id="color" placeholder="ex. ดำ ขาว" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>รูปภาพ</label>
+                                    <input type="file" id="lost_image" accept="image/*">
+                                </div>
+                                <div class="input-field">
+                                    <label>รายละเอียดเพิ่มเติม</label>
+                                    <input type="text" id="detail" placeholder="ex. ขนาดเล็ก ขนสั้น" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail location">
+                            <span class="title">ตำแหน่งที่หาย</span>
+                            <div id="lost_map" class="map-box"></div>
+                            <div class="fields">
+                                <div class="input-field">
+                                    <label>ละติจูด</label>
+                                    <input type="text" id="latitude" name="latitude" placeholder="กำลังดึงพิกัด" readonly required>
+                                </div>
+                                <div class="input-field">
+                                    <label>ลองติจูด</label>
+                                    <input type="text" id="longitude" name="longitude" placeholder="กำลังดึงพิกัด" readonly required>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit">ส่งข้อมูลแจ้งหาย</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ฝั่งขวา: แจ้งพบสัตว์ -->
+            <div class="con-container">
+                <form id="foundPetForm">
+                    <div class="form first">
+                        <header>แบบฟอร์มพบสัตว์พลัดหลง</header>
+                        <div class="detail personal">
+                            <span class="title">ข้อมูล</span>
+                            <div class="fields">
+                                <div class="input-field">
+                                    <label>Username</label>
+                                    <input type="text" id="found_username" placeholder="ขื่อเล่น" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>วันที่พบ</label>
+                                    <input type="date" id="found_date" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>ช่องทางติดต่อ</label>
+                                    <input type="text" id="found_contact" placeholder="ช่องทางติดต่อ" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail Animal">
+                            <span class="title">ข้อมูลสัตว์</span>
+                            <div class="fields">
+                                <div class="input-field">
+                                    <label>ประเภทสัตว์</label>
+                                    <input type="text" id="found_pet_type" placeholder="ex. หมา แมว" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>สี</label>
+                                    <input type="text" id="found_color" placeholder="ex. ดำ ขาว" required>
+                                </div>
+                                <div class="input-field">
+                                    <label>รูปภาพ</label>
+                                    <input type="file" id="found_image" accept="image/*">
+                                </div>
+                                <div class="input-field">
+                                    <label>รายละเอียดเพิ่มเติม</label>
+                                    <input type="text" id="found_detail" placeholder="ex. ขนาดเล็ก ขนสั้น" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="detail location">
+                            <span class="title">ตำแหน่งที่พบ</span>
+                            <div id="found_map" class="map-box"></div>
+                            <div class="fields">
+                                <div class="input-field">
+                                    <label>ละติจูด</label>
+                                    <input type="text" id="found_latitude" name="found_latitude" placeholder="กำลังดึงพิกัด" readonly required>
+                                </div>
+                                <div class="input-field">
+                                    <label>ลองติจูด</label>
+                                    <input type="text" id="found_longitude" name="found_longitude" placeholder="กำลังดึงพิกัด" readonly required>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit">ส่งข้อมูลแจ้งพบ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // แผนที่
+        function setupMap(mapId, latId, lngId) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(p => {
+                    const lat = p.coords.latitude;
+                    const lng = p.coords.longitude;
+                    
+                    const map = L.map(mapId).setView([lat, lng], 15);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                    const marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+                    const update = (la, ln) => {
+                        marker.setLatLng([la, ln]);
+                        document.getElementById(latId).value = la.toFixed(6);
+                        document.getElementById(lngId).value = ln.toFixed(6);
+                    };
+
+                    update(lat, lng);
+                    marker.on('dragend', e => update(e.target.getLatLng().lat, e.target.getLatLng().lng));
+                    map.on('click', e => update(e.latlng.lat, e.latlng.lng));
+                });
+            }
+        }
+        setupMap('lost_map', 'latitude', 'longitude');
+        setupMap('found_map', 'found_latitude', 'found_longitude');
+
+        // รูปภาพ backend/static
+        async function uploadFile(file) {
+            if (!file) return "https://www.melivecode.com/attractions/1.jpg";
+            const fd = new FormData();
+            fd.append("file", file);
+            const res = await fetch("/upload", { method: "POST", body: fd });
+            const data = await res.json();
+            return data.url;
+        }
+
+        // ฟอร์ม
+        async function sendForm(prefix, endpoint, fileInputId, redirectUrl) {
+            const p = prefix ? prefix + "_" : "";
+            const file = document.getElementById(fileInputId).files[0];
+            const imgUrl = await uploadFile(file);
+
+            const data = {
+                name: document.getElementById(p + "username").value,
+                detail: `${document.getElementById(p + "pet_type").value} สี${document.getElementById(p + "color").value} ${document.getElementById(p + "detail").value} (วันที่: ${document.getElementById(p + "date").value}, ติดต่อ: ${document.getElementById(p + "contact").value})`,
+                coverimage: imgUrl,
+                latitude: parseFloat(document.getElementById(prefix ? prefix + "_latitude" : "latitude").value) || 0.0,
+                longitude: parseFloat(document.getElementById(prefix ? prefix + "_longitude" : "longitude").value) || 0.0
+            };
+
+            const res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) {
+                alert("บันทึกข้อมูลแล้ว");
+                window.location.href = redirectUrl;
+            }
+        }
+
+        document.getElementById("lostPetForm").addEventListener("submit", e => {
+            e.preventDefault();
+            sendForm("", "/losts", "lost_image", "/losts");
+        });
+
+        document.getElementById("foundPetForm").addEventListener("submit", e => {
+            e.preventDefault();
+            sendForm("found", "/founds", "found_image", "/founds");
+        });
+    </script>
+</body>
+</html>

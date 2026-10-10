@@ -1,0 +1,139 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+
+}
+
+nav {
+    padding: 1rem; /* ขอบบนขอบล่าง */
+    background-color: #333;
+}
+
+.nav-con {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo a{
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+}
+
+.menu li {
+    margin: 0 1rem;
+}
+
+.menu li a{
+    color: #fff;
+    text-decoration: none;
+}
+
+.maincontent {
+    background-color: #ffecec;
+}
+
+.maincontent-con {
+    display: flex;
+}
+
+.maincontent-info {
+    width: 100%;
+    padding: 2rem;
+}
+
+.maincontent-info h3 {
+    font-size: 2rem;
+}
+
+.maincontent-info p {
+    margin: 1rem 0;
+}
+
+.maincontent-info .maincontent-btn {
+    color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.maincontent-btn.btn-find {
+    background-color: aqua;
+}
+
+.maincontent-btn.btn-lost {
+    background-color: coral;
+}
+.maincontent-img {
+    width: 100%;
+    padding: 2rem;
+    border-radius: 5px;
+}
+
+.content-con {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 2rem;
+}
+
+.content-con-animal {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    column-gap: 1rem;
+    row-gap: 1rem;
+}
+
+.content-title {
+    margin: 2rem 0;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    gap: 1rem;
+}
+
+.content-title .title-btn {
+    display: inline-block;
+    color: blanchedalmond;
+    background-color: black;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+
+.content-title h3 {
+    font-size: 2rem;
+}
+
+.content-item img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.content-item h4 {
+    margin-top: 1rem;
+}
+
+.content-item p {
+    margin: 1rem 0;
+}
+
+.content-item a{
+    display: inline-block;
+    color: blanchedalmond;
+    background-color: black;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
